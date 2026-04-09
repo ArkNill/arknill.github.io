@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArkNill — Portfolio</title>
+<meta name="description" content="6년차 백엔드 엔지니어. 데이터 정제부터 팩트체킹까지, 로컬에서 동작하는 AI 파이프라인을 만듭니다.">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0d1117;--bg2:#161b22;--bg3:#1c2128;
+  --text:#e6edf3;--text2:#8b949e;--text3:#6e7681;
+  --accent:#58a6ff;--accent2:#3fb950;--accent3:#d2a8ff;
+  --border:#30363d;
+  --card:#161b22;
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Pretendard','Segoe UI',sans-serif;line-height:1.7}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.container{max-width:960px;margin:0 auto;padding:0 24px}
+.back-link{display:inline-block;padding:16px 0;font-size:0.875rem;color:var(--text2)}
+.hero{padding:48px 0;text-align:center}
+.hero h1{font-size:2rem;font-weight:700;margin-bottom:8px}
+.hero .tagline{font-size:1.15rem;color:var(--text2);max-width:640px;margin:0 auto;line-height:1.8}
+.hero .links{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.hero .links a{padding:8px 20px;border:1px solid var(--border);border-radius:6px;font-size:0.875rem;color:var(--text);transition:border-color .2s}
+.hero .links a:hover{border-color:var(--accent);text-decoration:none}
+section{padding:48px 0}
+section h2{font-size:1.4rem;font-weight:600;margin-bottom:24px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.section-desc{color:var(--text2);margin-bottom:32px;max-width:720px;line-height:1.8}
+.about-content{color:var(--text2);line-height:2;font-size:1rem}
+.about-content strong{color:var(--text)}
+.eco-flow{display:flex;flex-direction:column;gap:0}
+.eco-row{display:flex;align-items:stretch;gap:0}
+.eco-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px;flex:1;min-width:0}
+.eco-card h3{font-size:1rem;font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.eco-card .tag{font-size:0.7rem;padding:2px 8px;border-radius:10px;font-weight:500}
+.tag-agent{background:#1f3a5f;color:var(--accent)}
+.tag-data{background:#1a3a1a;color:var(--accent2)}
+.tag-platform{background:#2a1f3f;color:var(--accent3)}
+.eco-card p{color:var(--text2);font-size:0.875rem;line-height:1.7}
+.eco-arrow{display:flex;align-items:center;justify-content:center;padding:12px 0;color:var(--text3);font-size:1.2rem}
+.eco-arrow-h{display:flex;align-items:center;justify-content:center;padding:0 12px;color:var(--text3);font-size:1.2rem;flex-shrink:0}
+.eco-note{color:var(--text3);font-size:0.8rem;text-align:center;margin-top:16px}
+.pkg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.pkg-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:6px;transition:border-color .2s}
+.pkg-card:hover{border-color:var(--accent)}
+.pkg-card h4{font-size:0.95rem;font-weight:600}
+.pkg-card p{color:var(--text2);font-size:0.825rem;line-height:1.6;flex:1}
+.pkg-meta{display:flex;gap:12px;align-items:center;font-size:0.75rem;color:var(--text3)}
+.pkg-meta a{color:var(--text3)}
+.pkg-meta a:hover{color:var(--accent)}
+.pkg-cat{font-size:0.7rem;padding:2px 8px;border-radius:10px;font-weight:500;width:fit-content}
+.cat-collect{background:#1a3a1a;color:var(--accent2)}
+.cat-extract{background:#1f3a5f;color:var(--accent)}
+.cat-search{background:#2a1f3f;color:var(--accent3)}
+.cat-monitor{background:#3a2a1a;color:#d29922}
+.cat-guard{background:#3a1a1a;color:#f85149}
+.numbers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+.num-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px;text-align:center}
+.num-card .value{font-size:1.8rem;font-weight:700;color:var(--accent);display:block}
+.num-card .label{color:var(--text2);font-size:0.85rem;margin-top:4px}
+.stack-group{margin-bottom:20px}
+.stack-group h3{font-size:0.9rem;color:var(--text2);margin-bottom:10px;font-weight:500}
+.stack-tags{display:flex;flex-wrap:wrap;gap:8px}
+.stack-tag{background:var(--bg3);border:1px solid var(--border);padding:6px 14px;border-radius:6px;font-size:0.825rem;color:var(--text)}
+footer{padding:48px 0 64px;text-align:center;color:var(--text3);font-size:0.8rem}
+footer a{color:var(--text3)}
+@media(max-width:640px){
+  .hero{padding:48px 0 32px}
+  .hero h1{font-size:1.5rem}
+  .eco-row{flex-direction:column}
+  .eco-arrow-h{transform:rotate(90deg);padding:12px 0}
+  .numbers-grid{grid-template-columns:repeat(2,1fr)}
+  .pkg-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back-link" href="/">&larr; Home</a>
+</div>
+
+<div class="hero">
+  <div class="container">
+    <h1>ArkNill</h1>
+    <p class="tagline">
+      Not training bigger models —<br>
+      building better <strong>plumbing around them</strong>: collection, extraction, search, verification, guardrails.<br>
+      AI pipelines that run without cloud API keys.
+    </p>
+    <div class="links">
+      <a href="https://github.com/ArkNill">GitHub</a>
+      <a href="https://github.com/QuartzUnit">QuartzUnit</a>
+      <a href="https://pypi.org/user/ArkNill/">PyPI</a>
+      <a href="/">Blog</a>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="container">
+    <h2>About</h2>
+    <div class="about-content">
+      <p>
+        <strong>Backend engineer with 6 years of experience.</strong>
+        Worked across <strong>6 heterogeneous databases</strong> (PostgreSQL, Oracle, MariaDB, MSSQL, DB2, Netezza) with native SQL tuning.
+        Built DW/DM, BI/OLAP, and analytics systems for public and enterprise clients.
+        Extensive deployment experience in air-gapped environments.
+      </p>
+      <br>
+      <p>
+        Currently building <strong>local-inference AI pipelines</strong> —
+        from data collection to refinement, RAG, and fact-checking —
+        everything runs on-premise without cloud API calls.
+        Tools extracted from this work are published as open source under
+        <a href="https://github.com/QuartzUnit">QuartzUnit</a>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>Project Ecosystem</h2>
+    <p class="section-desc">
+      Each project is independent but connected by data flow.
+      Raw data flows through refinement, mart, and agent layers.
+    </p>
+    <div class="eco-flow">
+      <div class="eco-row">
+        <div class="eco-card">
+          <h3>Forge <span class="tag tag-data">Data Refinement</span></h3>
+          <p>Multi-source raw data to LLM-ready data warehouse. News, blogs, legacy DBs — any source refined. Includes fact-checking at 83.6% accuracy.</p>
+        </div>
+        <div class="eco-arrow-h">&rarr;</div>
+        <div class="eco-card">
+          <h3>QubicAI <span class="tag tag-data">Data Mart</span></h3>
+          <p>Auto-generates data marts on top of Forge DW. Natural language to SQL — BI dashboards in one sentence.</p>
+        </div>
+        <div class="eco-arrow-h">&rarr;</div>
+        <div class="eco-card">
+          <h3>Mirror Agent <span class="tag tag-agent">Autonomous Agent</span></h3>
+          <p>Custom ReAct + RAG (Qdrant + Neo4j) + persistent memory + 2-tier LLM fallback. On-premise, no frameworks.</p>
+        </div>
+      </div>
+      <div class="eco-arrow">&uarr; Tool Layer</div>
+      <div class="eco-row">
+        <div class="eco-card" style="border-color:var(--accent3)">
+          <h3>QuartzUnit OSS <span class="tag tag-platform">Open Source</span></h3>
+          <p>10 Python packages extracted from the above projects. Collection, extraction, search, monitoring, guardrails — modular tool ecosystem.</p>
+        </div>
+      </div>
+    </div>
+    <p class="eco-note">All projects run on local inference (vLLM on-premise). No cloud API dependency.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>QuartzUnit Packages</h2>
+    <p class="section-desc">
+      Each tool solves one problem.
+      CLI + async Python API + MCP server — three interfaces as standard.
+    </p>
+    <div class="pkg-grid">
+      <a class="pkg-card" href="https://github.com/QuartzUnit/markgrab">
+        <span class="pkg-cat cat-extract">Extract</span>
+        <h4>markgrab</h4>
+        <p>URL to LLM-ready markdown. HTML, YouTube, PDF, DOCX.</p>
+        <div class="pkg-meta"><span>114 tests</span><span>PyPI 0.1.2</span></div>
+      </a>
+      <a class="pkg-card" href="https://github.com/QuartzUnit/docpick">
+        <span class="pkg-cat cat-extract">Extract</span>
+        <h4>docpick</h4>
+        <p>Schema-based document OCR to structured JSON.</p>
+        <div class="pkg-meta"><span>217 tests</span><span>PyPI 0.1.2</span></div>
+      </a>
+      <a class="pkg-card" href="https://github.com/QuartzUnit/feedkit">
+        <span class="pkg-cat cat-collect">Collect</span>
+        <h4>feedkit</h4>
+        <p>RSS/Atom feed collection. 444 curated feed catalog built-in.</p>
+        <div class="pkg-meta"><span>34 tests</span><span>PyPI 0.1.1</span></div>
+      </a>
+      <a class="pkg-card" href="https://github.com/QuartzUnit/browsegrab">
+        <span class="pkg-cat cat-search">Search</span>
+        <h4>browsegrab</h4>
+        <p>Local LLM-optimized browser agent. Accessibility tree + token savings.</p>
+        <div class="pkg-meta"><span>200 tests</span><span>PyPI 0.1.1</span></div>
+      </a>
+      <a class="pkg-card" href="https://github.com/QuartzUnit/snapgrab">
+        <span class="pkg-cat cat-monitor">Monitor</span>
+        <h4>snapgrab</h4>
+        <p>URL to screenshot + metadata. Claude Vision optimized.</p>
+        <div class="pkg-meta"><span>29 tests</span><span>PyPI 0.1.0</span></div>
+      </a>
+      <a class="pkg-card" href="https://github.com/QuartzUnit/diffgrab">
+        <span class="pkg-cat cat-monitor">Monitor</span>
+        <h4>diffgrab</h4>
+        <p>Web page change detection + structured diff generation.</p>
+        <div class="pkg-meta"><span>89 tests</span><span>PyPI 0.1.0</span></div>
+      </a>
+      <a class="pkg-card" href="https://github.com/QuartzUnit/embgrep">
+        <span class="pkg-cat cat-search">Search</span>
+        <h4>embgrep</h4>
+        <p>Local semantic search. Embedding-based grep — search by meaning.</p>
+        <div class="pkg-meta"><span>74 tests</span><span>PyPI 0.1.0</span></div>
+      </a>
+      <a class="pkg-card" href="https://github.com/QuartzUnit/llm-degen-guard">
+        <span class="pkg-cat cat-guard">Guard</span>
+        <h4>llm-degen-guard</h4>
+        <p>LLM output degeneration detection. 4-signal composite scoring.</p>
+        <div class="pkg-meta"><span>55 tests</span><span>PyPI 0.1.0</span></div>
+      </a>
+      <a class="pkg-card" href="https://github.com/QuartzUnit/agent-loop-guard">
+        <span class="pkg-cat cat-guard">Guard</span>
+        <h4>agent-loop-guard</h4>
+        <p>Agent infinite loop detection. Sliding window similarity.</p>
+        <div class="pkg-meta"><span>78 tests</span><span>PyPI 0.1.0</span></div>
+      </a>
+      <a class="pkg-card" href="https://github.com/QuartzUnit/agent-action-policy">
+        <span class="pkg-cat cat-guard">Guard</span>
+        <h4>agent-action-policy</h4>
+        <p>Declarative action policy. 4 built-in templates, zero dep.</p>
+        <div class="pkg-meta"><span>69 tests</span><span>PyPI 0.1.0</span></div>
+      </a>
+    </div>
+    <p style="color:var(--text3);font-size:0.85rem;margin-top:16px;text-align:center">
+      10 packages &middot; <strong style="color:var(--text)">959 tests</strong> &middot; MIT License &middot; Korean + English docs
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>By the Numbers</h2>
+    <div class="numbers-grid">
+      <div class="num-card"><span class="value">6</span><span class="label">Heterogeneous DBs</span></div>
+      <div class="num-card"><span class="value">10</span><span class="label">PyPI Open Source Packages</span></div>
+      <div class="num-card"><span class="value">959</span><span class="label">Tests (Full Ecosystem)</span></div>
+      <div class="num-card"><span class="value">444</span><span class="label">Curated RSS Feeds</span></div>
+      <div class="num-card"><span class="value">800K+</span><span class="label">Collected Articles (115 domains)</span></div>
+      <div class="num-card"><span class="value">83.6%</span><span class="label">Fact-checking Accuracy (Prod)</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>Tech Stack</h2>
+    <div class="stack-group"><h3>Languages</h3><div class="stack-tags"><span class="stack-tag">Python</span><span class="stack-tag">Java</span><span class="stack-tag">Kotlin</span><span class="stack-tag">TypeScript</span><span class="stack-tag">SQL</span></div></div>
+    <div class="stack-group"><h3>Backend & AI</h3><div class="stack-tags"><span class="stack-tag">FastAPI</span><span class="stack-tag">Spring Boot</span><span class="stack-tag">vLLM</span><span class="stack-tag">Qdrant</span><span class="stack-tag">Neo4j</span></div></div>
+    <div class="stack-group"><h3>Databases</h3><div class="stack-tags"><span class="stack-tag">PostgreSQL</span><span class="stack-tag">Oracle</span><span class="stack-tag">MariaDB</span><span class="stack-tag">MSSQL</span><span class="stack-tag">DB2</span><span class="stack-tag">Redis</span></div></div>
+    <div class="stack-group"><h3>Frontend & Mobile</h3><div class="stack-tags"><span class="stack-tag">Next.js</span><span class="stack-tag">React Native</span><span class="stack-tag">Jetpack Compose</span></div></div>
+    <div class="stack-group"><h3>Infra</h3><div class="stack-tags"><span class="stack-tag">Docker</span><span class="stack-tag">GitHub Actions</span><span class="stack-tag">Cloudflare</span><span class="stack-tag">Playwright</span></div></div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p><a href="https://github.com/ArkNill">GitHub</a> &middot; <a href="https://github.com/QuartzUnit">QuartzUnit</a> &middot; <a href="https://pypi.org/user/ArkNill/">PyPI</a> &middot; <a href="/">Blog</a></p>
+  </div>
+</footer>
+</body>
+</html>

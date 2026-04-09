@@ -1,0 +1,63 @@
+baseURL = "https://arknill.github.io/"
+languageCode = "en"
+title = "ArkNill"
+theme = "PaperMod"
+paginate = 10
+
+[params]
+  author = "ArkNill"
+  description = "Backend engineer building local-first AI pipelines — collection, extraction, search, verification, guardrails."
+  defaultTheme = "dark"
+  showReadingTime = true
+  showShareButtons = false
+  showPostNavLinks = true
+  showBreadCrumbs = true
+  showCodeCopyButtons = true
+  showToc = true
+  tocOpen = false
+  comments = false
+
+  [params.homeInfoParams]
+    Title = "ArkNill"
+    Content = """
+Backend engineer building local-first AI pipelines.
+
+Collection, extraction, search, verification, guardrails — no cloud API keys required.
+
+[GitHub](https://github.com/ArkNill) · [QuartzUnit](https://github.com/QuartzUnit) · [PyPI](https://pypi.org/user/ArkNill/) · [Portfolio](/portfolio/)
+"""
+
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/ArkNill"
+  [[params.socialIcons]]
+    name = "email"
+    url = "mailto:48707894+ArkNill@users.noreply.github.com"
+
+[menu]
+  [[menu.main]]
+    identifier = "blog"
+    name = "Blog"
+    url = "/blog/"
+    weight = 10
+  [[menu.main]]
+    identifier = "portfolio"
+    name = "Portfolio"
+    url = "/portfolio/"
+    weight = 20
+  [[menu.main]]
+    identifier = "search"
+    name = "Search"
+    url = "/search/"
+    weight = 30
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[markup]
+  [markup.highlight]
+    style = "dracula"
+    lineNos = false
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
