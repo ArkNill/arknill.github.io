@@ -26,9 +26,6 @@ paginate = 10
   [[params.socialIcons]]
     name = "rss"
     url = "/index.xml"
-  [[params.socialIcons]]
-    name = "email"
-    url = "mailto:48707894+ArkNill@users.noreply.github.com"
 
 # ---------- Languages ----------
 [languages]
@@ -39,15 +36,6 @@ paginate = 10
     title = "ArkNill"
     [languages.en.params]
       description = "Backend engineer building local-first AI pipelines — collection, extraction, search, verification, guardrails."
-      [languages.en.params.homeInfoParams]
-        Title = "ArkNill"
-        Content = """
-Backend engineer building local-first AI pipelines.
-
-Collection, extraction, search, verification, guardrails — no cloud API keys required.
-
-[GitHub](https://github.com/ArkNill) · [QuartzUnit](https://github.com/QuartzUnit) · [PyPI](https://pypi.org/user/ArkNill/) · [Portfolio](/portfolio/)
-"""
     [[languages.en.menu.main]]
       identifier = "blog"
       name = "Blog"
@@ -71,15 +59,6 @@ Collection, extraction, search, verification, guardrails — no cloud API keys r
     title = "ArkNill"
     [languages.ko.params]
       description = "로컬 우선 AI 파이프라인을 만드는 백엔드 엔지니어 — 수집, 추출, 검색, 검증, 가드레일."
-      [languages.ko.params.homeInfoParams]
-        Title = "ArkNill"
-        Content = """
-로컬 우선 AI 파이프라인을 만드는 백엔드 엔지니어.
-
-수집, 추출, 검색, 검증, 가드레일 — 클라우드 API 키 없이 동작합니다.
-
-[GitHub](https://github.com/ArkNill) · [QuartzUnit](https://github.com/QuartzUnit) · [PyPI](https://pypi.org/user/ArkNill/) · [Portfolio](/ko/portfolio/)
-"""
     [[languages.ko.menu.main]]
       identifier = "blog"
       name = "블로그"
