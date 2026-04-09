@@ -31,6 +31,12 @@ Collection, extraction, search, verification, guardrails — no cloud API keys r
     name = "github"
     url = "https://github.com/ArkNill"
   [[params.socialIcons]]
+    name = "dev"
+    url = "https://dev.to/arknill"
+  [[params.socialIcons]]
+    name = "rss"
+    url = "/index.xml"
+  [[params.socialIcons]]
     name = "email"
     url = "mailto:48707894+ArkNill@users.noreply.github.com"
 

@@ -1,0 +1,441 @@
+/* ==========================================================================
+   ArkNill Blog — PaperMod Extended Stylesheet
+   ========================================================================== */
+
+/* ---------- Dark palette override ---------- */
+:root {
+    --gap: 24px;
+    --content-gap: 24px;
+    --radius: 12px;
+    --theme: #f8f9fa;
+    --entry: #ffffff;
+    --primary: #1a1a2e;
+    --secondary: #6b7280;
+    --tertiary: #e5e7eb;
+    --content: #1f2937;
+    --code-block-bg: #1e1e2e;
+    --code-bg: #f0f0f5;
+    --border: #e2e4e8;
+    --hljs-bg: #1e1e2e;
+    --accent: #6366f1;
+    --accent-rgb: 99, 102, 241;
+    --accent-secondary: #a78bfa;
+    --card-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    --card-shadow-hover: 0 12px 40px rgba(0,0,0,0.1);
+}
+
+:root[data-theme="dark"] {
+    --theme: #0d1117;
+    --entry: rgba(22, 27, 34, 0.8);
+    --primary: #e6edf3;
+    --secondary: #8b949e;
+    --tertiary: #21262d;
+    --content: #d1d5db;
+    --code-block-bg: #161b22;
+    --code-bg: rgba(110, 118, 129, 0.2);
+    --border: rgba(240, 246, 252, 0.1);
+    --hljs-bg: #161b22;
+    --accent: #818cf8;
+    --accent-rgb: 129, 140, 248;
+    --accent-secondary: #a78bfa;
+    --card-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    --card-shadow-hover: 0 16px 48px rgba(0,0,0,0.4);
+}
+
+/* ---------- Global transitions ---------- */
+body,
+.nav,
+.post-entry,
+.footer,
+#top-link,
+.pagination a {
+    transition: color 0.3s ease, background-color 0.3s ease,
+                border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ---------- Typography ---------- */
+body {
+    font-family: 'Inter', 'Noto Sans KR', -apple-system, BlinkMacSystemFont,
+                 'Segoe UI', Roboto, sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    letter-spacing: -0.011em;
+    line-height: 1.75;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+}
+
+/* ---------- Header / Navigation ---------- */
+.nav {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: rgba(var(--theme-rgb, 13,17,23), 0.85);
+    border-bottom: 1px solid var(--border);
+}
+
+:root:not([data-theme="dark"]) .nav {
+    background: rgba(248, 249, 250, 0.85);
+}
+
+#menu a {
+    position: relative;
+    transition: color 0.2s ease;
+}
+
+#menu a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width 0.25s ease;
+    border-radius: 1px;
+}
+
+#menu a:hover::after,
+#menu a.active::after {
+    width: 100%;
+}
+
+.logo a {
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: -0.02em;
+}
+
+/* ---------- Home hero ---------- */
+.first-entry {
+    border: none !important;
+    min-height: unset;
+}
+
+.home-info .entry-content {
+    color: var(--secondary);
+    font-size: 1.05rem;
+    line-height: 1.85;
+    max-width: 600px;
+}
+
+.home-info h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 50%, #f472b6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.2;
+    margin-bottom: 16px;
+}
+
+/* ---------- Social icons ---------- */
+.social-icons a {
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.social-icons a:hover {
+    transform: translateY(-2px);
+    color: var(--accent);
+}
+
+.social-icons a svg {
+    transition: fill 0.2s ease;
+}
+
+/* ---------- Post list cards ---------- */
+.post-entry {
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--card-shadow);
+    margin-bottom: 16px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease,
+                border-color 0.25s ease;
+    overflow: hidden;
+}
+
+.post-entry:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--card-shadow-hover);
+    border-color: rgba(var(--accent-rgb), 0.3);
+}
+
+.post-entry .entry-header h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.post-entry:hover .entry-header h2 {
+    color: var(--accent);
+}
+
+.post-entry .entry-content {
+    color: var(--secondary);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    -webkit-line-clamp: 3;
+}
+
+.post-entry .post-meta {
+    font-size: 0.8rem;
+    color: var(--secondary);
+    opacity: 0.8;
+}
+
+/* ---------- Tags ---------- */
+.post-tags a {
+    display: inline-block;
+    padding: 2px 10px;
+    font-size: 0.75rem;
+    border-radius: 20px;
+    background: rgba(var(--accent-rgb), 0.1);
+    color: var(--accent);
+    border: 1px solid rgba(var(--accent-rgb), 0.2);
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.post-tags a:hover {
+    background: rgba(var(--accent-rgb), 0.2);
+    border-color: rgba(var(--accent-rgb), 0.4);
+}
+
+/* ---------- Single post ---------- */
+.post-single .post-title {
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.25;
+    margin-bottom: 8px;
+}
+
+.post-single .post-meta {
+    color: var(--secondary);
+    font-size: 0.85rem;
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.post-content h2 {
+    margin-top: 2.5em;
+    margin-bottom: 0.75em;
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid var(--border);
+    font-size: 1.4rem;
+}
+
+.post-content h3 {
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    font-size: 1.15rem;
+    color: var(--accent);
+}
+
+.post-content a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.post-content a:hover {
+    color: var(--accent-secondary);
+}
+
+.post-content blockquote {
+    border-left: 3px solid var(--accent);
+    padding: 12px 20px;
+    margin: 24px 0;
+    background: rgba(var(--accent-rgb), 0.05);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    color: var(--secondary);
+    font-style: normal;
+}
+
+/* ---------- Tables ---------- */
+.post-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 0.9rem;
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.post-content th {
+    background: rgba(var(--accent-rgb), 0.1);
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 2px solid rgba(var(--accent-rgb), 0.2);
+}
+
+.post-content td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+}
+
+.post-content tr:last-child td {
+    border-bottom: none;
+}
+
+/* ---------- Code blocks ---------- */
+.post-content pre {
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 20px;
+    font-size: 0.875rem;
+    line-height: 1.65;
+}
+
+.post-content code {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 0.875em;
+}
+
+.post-content :not(pre) > code {
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: var(--code-bg);
+    font-size: 0.85em;
+}
+
+.copy-code {
+    border-radius: 6px !important;
+    font-size: 0.75rem;
+}
+
+/* ---------- TOC ---------- */
+.toc {
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 32px;
+}
+
+.toc details summary {
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+/* ---------- Footer ---------- */
+.footer {
+    border-top: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--secondary);
+}
+
+/* ---------- Scroll to top ---------- */
+#top-link {
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--entry);
+    border: 1px solid var(--border);
+    box-shadow: var(--card-shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#top-link:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow-hover);
+}
+
+/* ---------- Pagination ---------- */
+.pagination a {
+    border-radius: 8px;
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.pagination a:hover {
+    background: rgba(var(--accent-rgb), 0.1);
+    border-color: rgba(var(--accent-rgb), 0.3);
+}
+
+/* ---------- Breadcrumbs ---------- */
+.breadcrumbs {
+    font-size: 0.8rem;
+    color: var(--secondary);
+    margin-bottom: 16px;
+}
+
+.breadcrumbs a {
+    color: var(--secondary);
+    transition: color 0.2s ease;
+}
+
+.breadcrumbs a:hover {
+    color: var(--accent);
+}
+
+/* ---------- Search ---------- */
+#searchInput {
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--entry);
+    padding: 12px 16px;
+    font-family: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#searchInput:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.15);
+    outline: none;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+    .home-info h1 {
+        font-size: 1.8rem;
+    }
+
+    .post-entry {
+        margin-bottom: 12px;
+    }
+
+    .post-single .post-title {
+        font-size: 1.5rem;
+    }
+
+    .post-content h2 {
+        font-size: 1.2rem;
+    }
+}
+
+/* ---------- Selection ---------- */
+::selection {
+    background: rgba(var(--accent-rgb), 0.3);
+    color: var(--primary);
+}
+
+/* ---------- Scrollbar (Webkit) ---------- */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--theme);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--tertiary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary);
+}
