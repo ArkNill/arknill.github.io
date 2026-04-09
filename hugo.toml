@@ -1,13 +1,13 @@
 baseURL = "https://arknill.github.io/"
-languageCode = "en"
-title = "ArkNill"
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = false
 theme = "PaperMod"
 paginate = 10
 
 [params]
   author = "ArkNill"
-  description = "Backend engineer building local-first AI pipelines — collection, extraction, search, verification, guardrails."
   defaultTheme = "dark"
+  displayFullLangName = true
   showReadingTime = true
   showShareButtons = false
   showPostNavLinks = true
@@ -16,16 +16,6 @@ paginate = 10
   showToc = true
   tocOpen = false
   comments = false
-
-  [params.homeInfoParams]
-    Title = "ArkNill"
-    Content = """
-Backend engineer building local-first AI pipelines.
-
-Collection, extraction, search, verification, guardrails — no cloud API keys required.
-
-[GitHub](https://github.com/ArkNill) · [QuartzUnit](https://github.com/QuartzUnit) · [PyPI](https://pypi.org/user/ArkNill/) · [Portfolio](/portfolio/)
-"""
 
   [[params.socialIcons]]
     name = "github"
@@ -40,22 +30,71 @@ Collection, extraction, search, verification, guardrails — no cloud API keys r
     name = "email"
     url = "mailto:48707894+ArkNill@users.noreply.github.com"
 
-[menu]
-  [[menu.main]]
-    identifier = "blog"
-    name = "Blog"
-    url = "/blog/"
-    weight = 10
-  [[menu.main]]
-    identifier = "portfolio"
-    name = "Portfolio"
-    url = "/portfolio/"
-    weight = 20
-  [[menu.main]]
-    identifier = "search"
-    name = "Search"
-    url = "/search/"
-    weight = 30
+# ---------- Languages ----------
+[languages]
+  [languages.en]
+    languageCode = "en"
+    languageName = "EN"
+    weight = 1
+    title = "ArkNill"
+    [languages.en.params]
+      description = "Backend engineer building local-first AI pipelines — collection, extraction, search, verification, guardrails."
+      [languages.en.params.homeInfoParams]
+        Title = "ArkNill"
+        Content = """
+Backend engineer building local-first AI pipelines.
+
+Collection, extraction, search, verification, guardrails — no cloud API keys required.
+
+[GitHub](https://github.com/ArkNill) · [QuartzUnit](https://github.com/QuartzUnit) · [PyPI](https://pypi.org/user/ArkNill/) · [Portfolio](/portfolio/)
+"""
+    [[languages.en.menu.main]]
+      identifier = "blog"
+      name = "Blog"
+      url = "/blog/"
+      weight = 10
+    [[languages.en.menu.main]]
+      identifier = "portfolio"
+      name = "Portfolio"
+      url = "/portfolio/"
+      weight = 20
+    [[languages.en.menu.main]]
+      identifier = "search"
+      name = "Search"
+      url = "/search/"
+      weight = 30
+
+  [languages.ko]
+    languageCode = "ko"
+    languageName = "KO"
+    weight = 2
+    title = "ArkNill"
+    [languages.ko.params]
+      description = "로컬 우선 AI 파이프라인을 만드는 백엔드 엔지니어 — 수집, 추출, 검색, 검증, 가드레일."
+      [languages.ko.params.homeInfoParams]
+        Title = "ArkNill"
+        Content = """
+로컬 우선 AI 파이프라인을 만드는 백엔드 엔지니어.
+
+수집, 추출, 검색, 검증, 가드레일 — 클라우드 API 키 없이 동작합니다.
+
+[GitHub](https://github.com/ArkNill) · [QuartzUnit](https://github.com/QuartzUnit) · [PyPI](https://pypi.org/user/ArkNill/) · [Portfolio](/ko/portfolio/)
+"""
+    [[languages.ko.menu.main]]
+      identifier = "blog"
+      name = "블로그"
+      url = "/ko/blog/"
+      weight = 10
+    [[languages.ko.menu.main]]
+      identifier = "portfolio"
+      name = "포트폴리오"
+      url = "/ko/portfolio/"
+      weight = 20
+    [[languages.ko.menu.main]]
+      identifier = "search"
+      name = "검색"
+      url = "/ko/search/"
+      weight = 30
 
 [outputs]
   home = ["HTML", "RSS", "JSON"]
