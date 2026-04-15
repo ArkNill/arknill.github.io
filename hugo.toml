@@ -51,6 +51,8 @@ paginate = 10
       name = "Search"
       url = "/search/"
       weight = 30
+    [languages.en.outputs]
+      home = ["HTML", "RSS", "JSON", "llmstxt"]
 
   [languages.ko]
     languageCode = "ko"
@@ -75,8 +77,11 @@ paginate = 10
       url = "/ko/search/"
       weight = 30
 
-[outputs]
-  home = ["HTML", "RSS", "JSON"]
+[outputFormats.llmstxt]
+  mediaType = "text/plain"
+  baseName = "llms"
+  isPlainText = true
+  notAlternative = true
 
 [markup]
   [markup.highlight]
