@@ -8,9 +8,12 @@ TocOpen: false
 draft: false
 ---
 
-I run Claude Code (Opus 4.6) as my primary coding tool and pay $200/month for it. I also run Qwen 3.5/3.6 35B locally on two DGX Sparks and an RTX 5090. Natural question: **how does a local 35B model compare to the commercial tool I'm paying for?**
+I run Claude Code (Opus 4.6) as my primary coding tool and pay $200/month for it.
+I also run Qwen 3.5/3.6 35B locally on two DGX Sparks and an RTX 5090.
+Natural question: **how does a local 35B model compare to the commercial tool I'm paying for?**
 
-To find out, I built three separate benchmark harnesses over 10 days. The journey taught me more about evaluation methodology than about the models themselves — because **the harness had more bugs than the models did**.
+To find out, I built three separate benchmark harnesses over 10 days.
+The journey taught me more about evaluation methodology than about the models themselves — because **the harness had more bugs than the models did**.
 
 ---
 
@@ -22,13 +25,15 @@ To find out, I built three separate benchmark harnesses over 10 days. The journe
 | **dgx-duo** | DGX1 + DGX2 | Builder (3.5) + Reviewer (3.6) pair mode | 254 |
 | **Local-Trinity** | All 3 nodes | Unified cross-node comparison | 290 |
 
-All three are zero-dependency Python (stdlib + urllib only). No frameworks, no pip installs on the inference nodes.
+All three are zero-dependency Python (stdlib + urllib only).
+No frameworks, no pip installs on the inference nodes.
 
 ---
 
 ## cc-crosscheck: The 3-Peer Protocol
 
-The core idea: run the same coding task on three "peers" — Claude Code (Opus 4.6), Codex (GPT-5.3), and a local 35B model — then compare outputs.
+The core idea: run the same coding task on three "peers" — Claude Code (Opus 4.6),
+Codex (GPT-5.3), and a local 35B model — then compare outputs.
 
 ```
 Task: "Implement a thread-safe LRU cache with TTL expiration"
@@ -41,7 +46,9 @@ Task: "Implement a thread-safe LRU cache with TTL expiration"
   Validator: AST analysis + test execution + consensus scoring
 ```
 
-The validator doesn't just check "does it run" — it performs AST consensus analysis, comparing structural patterns across all three solutions. If two out of three agree on an approach and one diverges, that divergence gets flagged.
+The validator doesn't just check "does it run" — it performs AST consensus analysis,
+comparing structural patterns across all three solutions.
+If two out of three agree on an approach and one diverges, that divergence gets flagged.
 
 ### What I Found (v0.9.6, 8 scenarios)
 
@@ -58,13 +65,16 @@ The validator doesn't just check "does it run" — it performs AST consensus ana
 
 **Result: 24/24 ALL PASSED (n=3), mean score 99.6.**
 
-The local 35B matched Claude Code quality on all 8 coding scenarios. The gap isn't in single-task quality — it's in speed (CC responds faster due to optimized infrastructure) and in handling ambiguous, multi-step tasks where the commercial tool's longer context and tool-use integration matter.
+The local 35B matched Claude Code quality on all 8 coding scenarios.
+The gap isn't in single-task quality — it's in speed (CC responds faster due to optimized infrastructure) and in handling ambiguous,
+multi-step tasks where the commercial tool's longer context and tool-use integration matter.
 
 ---
 
 ## dgx-duo: When Two Models Beat One
 
-Instead of comparing against commercial tools, dgx-duo asks: **can two local models working together outperform one?**
+Instead of comparing against commercial tools,
+dgx-duo asks: **can two local models working together outperform one?**
 
 The protocol:
 1. **DGX1 (Qwen 3.5, thinking OFF)** — Builder. Generates code fast.
@@ -79,22 +89,28 @@ The protocol:
 | **Pair (builder + reviewer)** | 8 | **100%** | **99.6** |
 | Multi-step | 6 | 83% | 96.1 |
 
-The reviewer catches bugs that a single-pass generator misses. The most common catches:
+The reviewer catches bugs that a single-pass generator misses.
+The most common catches:
 - Missing error handling (pytest.raises coverage)
 - Edge cases in concurrent code (race conditions)
 - Incomplete interface implementations
 
 ### The Rubber Stamp Problem (v0.9.3→v0.9.4)
 
-Early versions had a critical flaw: the reviewer **always approved**. It would say "looks good" even when the code had obvious bugs. This isn't a model limitation — it's a prompt engineering failure.
+Early versions had a critical flaw: the reviewer **always approved**.
+It would say "looks good" even when the code had obvious bugs.
+This isn't a model limitation — it's a prompt engineering failure.
 
-The fix (v0.9.4): changed the reviewer from "verify this code works" to "review this code — you are empowered to fail it." Giving the model explicit authority to reject transformed its behavior. Rubber stamp rate dropped from >90% to <10%.
+The fix (v0.9.4): changed the reviewer from "verify this code works" to "review this code — you are empowered to fail it."
+Giving the model explicit authority to reject transformed its behavior.
+Rubber stamp rate dropped from >90% to <10%.
 
 ---
 
 ## Local-Trinity: The Unified Benchmark
 
-Local-Trinity combines all three nodes into a single benchmark suite. Same task, all three nodes, n=3 for stability:
+Local-Trinity combines all three nodes into a single benchmark suite.
+Same task, all three nodes, n=3 for stability:
 
 ### Architecture
 
@@ -133,7 +149,8 @@ This is where the real learning happened:
 | v6 | 0 | Stable — added features | Performance timing, thinking A/B |
 | **v7** | **0** | Stable — final polish | assert_total denominator fix |
 
-**The harness had more bugs than the models.** Every time I thought a model was failing, the actual problem was:
+**The harness had more bugs than the models.**
+Every time I thought a model was failing, the actual problem was:
 - Assert matching that rejected valid alternative formats
 - Scoring that penalized correct-but-different approaches
 - Timeouts too short for thinking-heavy tasks
@@ -169,24 +186,33 @@ The MAJORITY cases reveal real model differences:
 
 ### 1. Benchmark Quality > Model Quality
 
-The models were fine from v1. My evaluation framework was broken. If your benchmark shows a model "failing" a task it should clearly handle, **the bug is in your benchmark**.
+The models were fine from v1.
+My evaluation framework was broken.
+If your benchmark shows a model "failing" a task it should clearly handle, **the bug is in your benchmark**.
 
 ### 2. Scores ≠ Quality
 
-A score of 100.0 means "passed all structural checks" — not "produced good code." I found cases where code scored 100.0 but had subtle bugs (nested validation edge cases) that the validator couldn't catch. The validator measures what it measures, not what you think it measures.
+A score of 100.0 means "passed all structural checks" — not "produced good code."
+I found cases where code scored 100.0 but had subtle bugs (nested validation edge cases) that the validator couldn't catch.
+The validator measures what it measures, not what you think it measures.
 
 ### 3. n=3 Is Mandatory
 
-With n=1, you can't distinguish model limitation from inference non-determinism. vLLM's MTP causes one run in four to produce wildly different output. n=3 with mean scoring separates signal from noise.
+With n=1, you can't distinguish model limitation from inference non-determinism.
+vLLM's MTP causes one run in four to produce wildly different output.
+n=3 with mean scoring separates signal from noise.
 
 ### 4. The 35B Sweet Spot
 
-For coding tasks with clear specifications, Qwen 35B MoE (3B active) at FP8 matches commercial tools on quality. The gap appears in:
+For coding tasks with clear specifications,
+Qwen 35B MoE (3B active) at FP8 matches commercial tools on quality.
+The gap appears in:
 - Ambiguous multi-step tasks (commercial tools have better instruction following)
 - Long-context retrieval (128GB vs 1M tokens cloud-side)
 - Tool use and file system interaction (Claude Code's integration layer)
 
-For everything else — writing functions, debugging, algorithms, refactoring — the local model works.
+For everything else — writing functions, debugging, algorithms, refactoring —
+the local model works.
 
 ---
 
@@ -201,4 +227,7 @@ Public release planned after documentation pass.
 
 ---
 
-*Personal benchmarks on personal hardware. Models: Qwen 3.5/3.6 35B-A3B (FP8 and Q4). Commercial comparison: Claude Code with Opus 4.6 (v2.1.109). Not affiliated with Anthropic, OpenAI, or Alibaba.*
+*Personal benchmarks on personal hardware.
+Models: Qwen 3.5/3.6 35B-A3B (FP8 and Q4).
+Commercial comparison: Claude Code with Opus 4.6 (v2.1.109).
+Not affiliated with Anthropic, OpenAI, or Alibaba.*
