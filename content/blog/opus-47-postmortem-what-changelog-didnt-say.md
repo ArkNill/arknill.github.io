@@ -147,7 +147,8 @@ It predates the Opus 4.7 model pin bypass, the tokenizer change (+35%),
 and all three postmortem bugs were already fixed by v2.1.101/v2.1.116.
 But v2.1.109 on Opus 4.6 avoids the post-postmortem issues entirely.
 
-Opus 4.6 is active until at least **February 5, 2027** — about 10 months of runway. If you're on a pinned version and stable, there is no urgency to upgrade.
+Opus 4.6 is active until at least **February 5, 2027** — about 10 months of runway.
+If you're on a pinned version and stable, there is no urgency to upgrade.
 
 ---
 

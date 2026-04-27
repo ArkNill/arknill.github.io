@@ -1,4 +1,22 @@
-{{- /* Google Fonts — Inter + Noto Sans KR */ -}}
+{{- /* Google Fonts — Inter + Noto Sans KR + JetBrains Mono */ -}}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+KR:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+{{- /* AOS — Animate On Scroll */ -}}
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  AOS.init({ duration: 600, once: true, offset: 60 });
+  // Reading progress bar
+  var bar = document.getElementById('reading-progress');
+  if (bar) {
+    window.addEventListener('scroll', function() {
+      var h = document.documentElement;
+      var pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+      bar.style.width = pct + '%';
+    });
+  }
+});
+</script>

@@ -176,7 +176,9 @@ cross-model pipelines, zero-latency local access, complete privacy.
 The failure modes (quantization loss, non-determinism, thinking runaways) don't appear in published benchmarks.
 You only find them by running thousands of real tasks.
 
-The cluster isn't cheaper than the cloud. It's **more capable** in specific ways that matter for my work — and it doesn't degrade when a vendor ships a bad update.
+The cluster isn't cheaper than the cloud.
+It's **more capable** in specific ways that matter for my work —
+and it doesn't degrade when a vendor ships a bad update.
 
 ---
 

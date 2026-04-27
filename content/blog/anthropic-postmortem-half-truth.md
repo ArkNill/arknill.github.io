@@ -13,7 +13,8 @@ They frame it as: model weights unchanged, harness bugs fixed, problem solved.
 
 **The three bugs are real. Their impact was real. The fixes were real.**
 
-But the postmortem is a carefully scoped document that tells half the truth. Here's the other half.
+But the postmortem is a carefully scoped document that tells half the truth.
+Here's the other half.
 
 ---
 
@@ -38,7 +39,8 @@ I accept this part.
 
 ## The Strategic Scoping
 
-The postmortem covers "why 4.6 users felt degradation." It does not address a separate, concurrent complaint stream: **"4.7 is worse than 4.6."**
+The postmortem covers "why 4.6 users felt degradation."
+It does not address a separate, concurrent complaint stream: **"4.7 is worse than 4.6."**
 
 These are model-level regressions that have nothing to do with harness bugs:
 
@@ -222,4 +224,5 @@ is not a sustainable relationship between vendors and professional developers.
 
 ---
 
-*Independent analysis based on 42,363 proxy-captured API calls, 36-claim cross-check of the postmortem, and 9 open GitHub issues. Not affiliated with or endorsed by Anthropic.*
+*Independent analysis based on 42,363 proxy-captured API calls, 36-claim cross-check of the postmortem, and 9 open GitHub issues.
+Not affiliated with or endorsed by Anthropic.*

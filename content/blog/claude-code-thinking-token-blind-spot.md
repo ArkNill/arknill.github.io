@@ -146,21 +146,28 @@ remains an open question with data from only two accounts.
 
 ## Anthropic's Response
 
-**Update (April 23):** Anthropic published a [postmortem](https://www.anthropic.com/engineering/april-23-postmortem) acknowledging **three product-layer bugs** that degraded Claude Code between March and April 2026:
+**Update (April 23):** Anthropic published a [postmortem](https://www.anthropic.com/engineering/april-23-postmortem)
+acknowledging **three product-layer bugs** that degraded Claude Code between March and April 2026:
 
 1. **Effort downgrade** — Default effort level was silently changed from `high` to `medium` on March 4 (v2.1.68). Pro and Max users ran at reduced quality for **48 days** until restored on April 21 (v2.1.117).
 2. **Thinking cache pattern clear** — A change on March 26 (v2.1.85) broke thinking token caching, fixed April 10 (v2.1.101). **Not recorded in CHANGELOG.**
 3. **"≤25 words" system prompt** — Added April 16 (v2.1.111), caused 3% coding quality drop, reverted April 20 (v2.1.116). **Not recorded in CHANGELOG.**
 
-The postmortem confirms none of these involved model weight changes — they were configuration and prompt-layer issues. Anthropic also reset usage meters and launched [@ClaudeDevs](https://x.com/ClaudeDevs) for future incident communication.
+The postmortem confirms none of these involved model weight changes —
+they were configuration and prompt-layer issues.
+Anthropic also reset usage meters and launched [@ClaudeDevs](https://x.com/ClaudeDevs) for future incident communication.
 
-**What remains unaddressed:** The specific bugs documented in this investigation (B3–B11) — tool result truncation (167,770 events), fake rate limits (151 events), silent context removal (5,437 events) — are not covered by the postmortem. The quota formula question (0x→1x cache_read weight hypothesis) also remains unanswered.
+**What remains unaddressed:** The specific bugs documented in this investigation (B3–B11) —
+tool result truncation (167,770 events), fake rate limits (151 events),
+silent context removal (5,437 events) — are not covered by the postmortem.
+The quota formula question (0x→1x cache_read weight hypothesis) also remains unanswered.
 
 **Prior communication (April 2):** Before the postmortem, Lydia Hallie (Anthropic, Product) [posted on X](https://x.com/lydiahallie/status/2039800715607187906):
 
 > *"We fixed a few bugs along the way, but none were over-charging you."*
 
-The cache fixes (B1/B2) she referenced were real and helpful. The three bugs acknowledged in the postmortem came after this statement.
+The cache fixes (B1/B2) she referenced were real and helpful.
+The three bugs acknowledged in the postmortem came after this statement.
 
 ## What You Can Do
 
@@ -176,15 +183,27 @@ Self-diagnosis guide: [09_QUICKSTART.md](https://github.com/ArkNill/claude-code-
 
 ## Independent Corroboration
 
-After I published the original version of this analysis, several independent researchers brought their own data. Their findings both confirmed and corrected mine.
+After I published the original version of this analysis,
+several independent researchers brought their own data.
+Their findings both confirmed and corrected mine.
 
 ### seanGSISG: 178K calls that changed my conclusion
 
-[@seanGSISG](https://github.com/seanGSISG) contributed **178,009 API calls** from a separate Max 20x account spanning December 2025 through April 2026 — the 5 months of "before-data" my proxy couldn't capture. ([Full analysis with 6 scripts](https://github.com/ArkNill/claude-code-hidden-problem-analysis/issues/3))
+[@seanGSISG](https://github.com/seanGSISG) contributed **178,009 API calls** from a separate Max 20x account
+spanning December 2025 through April 2026 —
+the 5 months of "before-data" my proxy couldn't capture.
+([Full analysis with 6 scripts](https://github.com/ArkNill/claude-code-hidden-problem-analysis/issues/3))
 
-Their JSONL logs contain actual content blocks, allowing direct measurement of thinking tokens via character-based heuristics. **Thinking tokens account for an estimated 0.0–0.1% of total quota** — not the primary cause I originally hypothesized.
+Their JSONL logs contain actual content blocks,
+allowing direct measurement of thinking tokens via character-based heuristics.
+**Thinking tokens account for an estimated 0.0–0.1% of total quota** —
+not the primary cause I originally hypothesized.
 
-Instead, their data is consistent with a **quota formula change**: modeling cache_read weight at 0x (old) vs 1x (new) produces a 10–15x multiplier that matches observed behavior. Under the 0x model, zero days exceeded the budget in their entire 5-month dataset. Under the 1x model, 18 days exceeded it.
+Instead, their data is consistent with a **quota formula change**:
+modeling cache_read weight at 0x (old) vs 1x (new)
+produces a 10–15x multiplier that matches observed behavior.
+Under the 0x model, zero days exceeded the budget in their entire 5-month dataset.
+Under the 1x model, 18 days exceeded it.
 
 Our per-1% measurements converge independently:
 
@@ -202,13 +221,15 @@ Our per-1% measurements converge independently:
 - **[@wpank](https://github.com/wpank)** — 47,810 requests, $10,700 total spend across version comparisons.
 - **[@edimuj](https://github.com/edimuj)** — 3.5M tokens measuring token waste. Built [tokenlean](https://github.com/edimuj/tokenlean).
 
-19 more contributors discovered bugs, built tools, and verified findings — credited in the [full contributor list](https://github.com/ArkNill/claude-code-hidden-problem-analysis#contributors).
+19 more contributors discovered bugs, built tools, and verified findings —
+credited in the [full contributor list](https://github.com/ArkNill/claude-code-hidden-problem-analysis#contributors).
 
 > *Each dataset was collected independently — different people, machines, subscription plans (Max 20x / Max 5x / Pro), and regions. Numbers are never aggregated across datasets.*
 
 ## Full Data
 
-Everything is open. Reproduce it yourself.
+Everything is open.
+Reproduce it yourself.
 
 - **Analysis repository**: [github.com/ArkNill/claude-code-hidden-problem-analysis](https://github.com/ArkNill/claude-code-hidden-problem-analysis)
 - **Consolidated dataset**: [DATASET.md](https://github.com/ArkNill/claude-code-hidden-problem-analysis/blob/main/DATASET.md) — four independent datasets with methodology notes and cross-comparison constraints
@@ -217,4 +238,6 @@ Everything is open. Reproduce it yourself.
 
 ---
 
-*My research, supported by independent contributors. Not affiliated with or endorsed by Anthropic. All monitoring uses the official `ANTHROPIC_BASE_URL` proxy mechanism.*
+*My research, supported by independent contributors.
+Not affiliated with or endorsed by Anthropic.
+All monitoring uses the official `ANTHROPIC_BASE_URL` proxy mechanism.*
