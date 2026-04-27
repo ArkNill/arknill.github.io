@@ -5,7 +5,7 @@ description: "월 20만원짜리 Claude Code를 로컬 Qwen 35B가 대체할 수
 tags: ["llm", "benchmarks", "claude-code", "local-llm", "testing"]
 showToc: true
 TocOpen: false
-draft: true
+draft: false
 ---
 
 월 20만원 내고 쓰는 Claude Code, 로컬 35B 모델이 대체할 수 있을까?

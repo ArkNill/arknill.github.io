@@ -5,7 +5,7 @@ description: "Anthropic admitted three product-layer bugs that degraded Claude C
 tags: ["claude-code", "ai", "postmortem", "transparency"]
 showToc: true
 TocOpen: false
-draft: true
+draft: false
 ---
 
 On April 23, Anthropic published a [postmortem](https://www.anthropic.com/engineering/april-23-postmortem) acknowledging three product-layer bugs that degraded Claude Code from March 4 through April 20.

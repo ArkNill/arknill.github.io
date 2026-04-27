@@ -5,7 +5,7 @@ description: "FP8이 프로덕션 마지노선입니다. Q4 MoE는 CJK에서 16%
 tags: ["llm", "quantization", "vllm", "inference", "local-llm"]
 showToc: true
 TocOpen: false
-draft: true
+draft: false
 ---
 
 저는 Qwen 3.5와 3.6 (35B MoE, 활성 파라미터 3B)을 3개 노드에서 프로덕션으로 운용하고 있습니다.

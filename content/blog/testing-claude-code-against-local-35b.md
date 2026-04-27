@@ -5,7 +5,7 @@ description: "I built three benchmark harnesses to compare Claude Code and Codex
 tags: ["llm", "benchmarks", "claude-code", "local-llm", "testing"]
 showToc: true
 TocOpen: false
-draft: true
+draft: false
 ---
 
 I run Claude Code (Opus 4.6) as my primary coding tool and pay $200/month for it.
