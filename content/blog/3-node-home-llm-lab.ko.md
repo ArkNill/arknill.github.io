@@ -1,6 +1,6 @@
 ---
 title: "3노드 홈 LLM 랩을 만들었습니다. 실제로 필요한 것들."
-date: 2026-05-02
+date: 2026-04-26
 description: "DGX Spark 2대(128GB)와 RTX 5090 데스크탑 — Qwen 3.5/3.6 35B를 프로덕션으로 운영합니다. 하드웨어 선택, 실제 비용, 운영 교훈, 그리고 왜 3대가 1대보다 나은지."
 tags: ["llm", "local-llm", "hardware", "dgx", "homelab"]
 showToc: true

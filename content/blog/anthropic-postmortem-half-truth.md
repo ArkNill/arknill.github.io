@@ -1,6 +1,6 @@
 ---
 title: "Anthropic's Postmortem Told Half the Truth"
-date: 2026-04-29
+date: 2026-04-23
 description: "Anthropic admitted 3 harness bugs caused Claude Code degradation. The bugs are real. But the postmortem strategically scoped out model-level regressions, ignored 9+ open issues, and all three 'bugs' happen to reduce Anthropic's serving costs. Here's what the other half looks like."
 tags: ["claude-code", "ai", "anthropic", "postmortem", "transparency"]
 showToc: true

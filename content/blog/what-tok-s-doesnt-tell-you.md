@@ -1,6 +1,6 @@
 ---
 title: "What tok/s Doesn't Tell You: Measuring LLM Speed That Matters"
-date: 2026-04-30
+date: 2026-04-24
 description: "My 204 tok/s GPU feels slower than a 65 tok/s one for some tasks. tok/s alone is a misleading metric — here's a framework (TTR, Effective tok/s, TCT) that measures what users actually experience."
 tags: ["llm", "benchmarks", "inference", "local-llm"]
 showToc: true

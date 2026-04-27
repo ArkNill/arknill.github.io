@@ -1,6 +1,6 @@
 ---
 title: "Anthropic 포스트모템, 진실의 절반만 말했습니다"
-date: 2026-04-29
+date: 2026-04-23
 description: "Anthropic이 인정한 3가지 버그는 사실입니다. 그런데 포스트모템이 의도적으로 빠뜨린 것들이 있습니다. 모델 회귀, CHANGELOG 공백, 그리고 비용 절감과 정확히 일치하는 '우연'. 42K API 호출 데이터와 36개 팩트체크로 나머지 절반을 복원합니다."
 tags: ["claude-code", "ai", "anthropic", "postmortem", "transparency"]
 showToc: true
