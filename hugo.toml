@@ -37,6 +37,9 @@ paginate = 10
     title = "ArkNill"
     [languages.en.params]
       description = "Backend engineer building local-first AI pipelines — collection, extraction, search, verification, guardrails."
+      [languages.en.params.homeInfoParams]
+        Title = "ArkNill"
+        Content = "Backend engineer running a 3-node local LLM lab. I measure what vendors won't tell you — 42K API calls, quantization loss, inference determinism. Data over marketing."
     [[languages.en.menu.main]]
       identifier = "blog"
       name = "Blog"
@@ -62,6 +65,9 @@ paginate = 10
     title = "ArkNill"
     [languages.ko.params]
       description = "로컬 우선 AI 파이프라인을 만드는 백엔드 엔지니어 — 수집, 추출, 검색, 검증, 가드레일."
+      [languages.ko.params.homeInfoParams]
+        Title = "ArkNill"
+        Content = "3노드 로컬 LLM 랩을 운영하는 백엔드 엔지니어. 벤더가 말하지 않는 것을 직접 측정합니다 — 42K API 콜 분석, 양자화 손실, 추론 비결정성. 마케팅이 아닌 데이터."
     [[languages.ko.menu.main]]
       identifier = "blog"
       name = "블로그"
