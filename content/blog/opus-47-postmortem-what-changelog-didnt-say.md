@@ -1,11 +1,11 @@
 ---
 title: "Opus 4.7 Postmortem: What the Changelog Didn't Say"
-date: 2026-04-27
+date: 2026-04-28
 description: "Anthropic admitted three product-layer bugs that degraded Claude Code for 48 days. Cross-checking the postmortem against the CHANGELOG reveals a structural transparency gap — 2 of 3 bugs had zero documentation. And 5 new issues persist beyond the postmortem's scope."
 tags: ["claude-code", "ai", "postmortem", "transparency"]
 showToc: true
 TocOpen: false
-draft: false
+draft: true
 ---
 
 On April 23, Anthropic published a [postmortem](https://www.anthropic.com/engineering/april-23-postmortem) acknowledging three product-layer bugs that degraded Claude Code from March 4 through April 20.

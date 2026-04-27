@@ -1,11 +1,11 @@
 ---
 title: "Testing Claude Code Against Local 35B Models: Building a Cross-Check Harness"
-date: 2026-04-27
+date: 2026-05-03
 description: "I built three benchmark harnesses to compare Claude Code and Codex against local Qwen 35B models. The harness had more bugs than the models. Here's the v1→v7 journey — 55 tasks, 290 tests, and what 'ALL_FAIL 7→0' taught me about evaluation."
 tags: ["llm", "benchmarks", "claude-code", "local-llm", "testing"]
 showToc: true
 TocOpen: false
-draft: false
+draft: true
 ---
 
 I run Claude Code (Opus 4.6) as my primary coding tool and pay $200/month for it.

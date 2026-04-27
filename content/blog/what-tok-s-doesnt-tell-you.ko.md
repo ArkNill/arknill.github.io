@@ -1,11 +1,11 @@
 ---
 title: "tok/s가 알려주지 않는 것: 실제로 체감되는 LLM 속도 측정법"
-date: 2026-04-27
+date: 2026-04-30
 description: "204 tok/s GPU가 65 tok/s GPU보다 느리게 느껴지는 작업이 있습니다. tok/s 하나로는 실사용 체감 속도를 예측할 수 없습니다. 실측에서 도출한 3가지 프레임워크(TTR, Effective tok/s, TCT)를 소개합니다."
 tags: ["llm", "benchmarks", "inference", "local-llm"]
 showToc: true
 TocOpen: false
-draft: false
+draft: true
 ---
 
 tok/s 숫자만 보고 GPU를 고르면 실패합니다.
