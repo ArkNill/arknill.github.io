@@ -2,10 +2,11 @@
    ArkNill Blog — PaperMod Extended Stylesheet
    ========================================================================== */
 
-/* ---------- Width override ---------- */
+/* ---------- Width override — viewport-responsive ---------- */
 :root {
-    --main-width: 900px;
-    --nav-width: 1200px;
+    /* min 720px, scales to 65% of viewport, max 1100px */
+    --main-width: clamp(720px, 65vw, 1100px);
+    --nav-width: clamp(1024px, 80vw, 1400px);
 }
 
 /* ---------- Dark palette override ---------- */
