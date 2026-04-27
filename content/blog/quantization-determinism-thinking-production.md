@@ -175,13 +175,16 @@ The solution is dynamic per-request thinking control:
 // Omit extra_body → server default (thinking ON)
 ```
 
-No server restart needed. Thinking is toggled per API call. My harness classifies task complexity upfront and routes accordingly.
+No server restart needed.
+Thinking is toggled per API call.
+My harness classifies task complexity upfront and routes accordingly.
 
 ---
 
 ## Summary: Production Configuration
 
-After v1–v7 of each harness (100+ scenarios per node, 290+ unit tests), this is the configuration that survived testing:
+After v1–v7 of each harness (100+ scenarios per node, 290+ unit tests),
+this is the configuration that survived testing:
 
 | Decision | Choice | Evidence |
 |----------|--------|----------|
@@ -192,7 +195,8 @@ After v1–v7 of each harness (100+ scenarios per node, 290+ unit tests), this i
 | Thinking budget | **Not available with MTP** | vLLM #39573 open |
 | Max tokens (thinking ON) | **32768** | Prevents runaway (80% → 0% failure) |
 
-None of these decisions came from reading papers or following leaderboards. All of them came from running the same tasks repeatedly until the failure modes revealed themselves.
+None of these decisions came from reading papers or following leaderboards.
+All of them came from running the same tasks repeatedly until the failure modes revealed themselves.
 
 ---
 
