@@ -1,6 +1,6 @@
 ---
 title: "Quantization, Determinism, and Thinking Tokens: Running Open-Source LLMs in Production"
-date: 2026-05-01
+date: 2026-04-25
 description: "FP8 is the production floor. Q4 MoE loses 16% on CJK. vLLM is non-deterministic under MTP. Thinking tokens eat 90% of your budget on the wrong tasks. Hard lessons from operating Qwen 3.5/3.6 35B across 3 nodes."
 tags: ["llm", "quantization", "vllm", "inference", "local-llm"]
 showToc: true

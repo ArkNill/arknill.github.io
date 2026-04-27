@@ -1,6 +1,6 @@
 ---
 title: "Claude Code vs 로컬 35B 모델: 크로스체크 하네스를 만들며 배운 것들"
-date: 2026-05-03
+date: 2026-04-27
 description: "월 20만원짜리 Claude Code를 로컬 Qwen 35B가 대체할 수 있을까? 하네스 3개, 55개 태스크, 290개 테스트를 돌려봤습니다. 가장 놀라운 발견 — 하네스 버그가 모델 버그보다 많았습니다."
 tags: ["llm", "benchmarks", "claude-code", "local-llm", "testing"]
 showToc: true

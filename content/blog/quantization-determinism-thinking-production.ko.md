@@ -1,6 +1,6 @@
 ---
 title: "양자화, 결정론, Thinking 토큰: 오픈소스 LLM 프로덕션 운용기"
-date: 2026-05-01
+date: 2026-04-25
 description: "FP8이 프로덕션 마지노선입니다. Q4 MoE는 CJK에서 16%를 잃습니다. vLLM은 MTP 하에서 비결정적입니다. Thinking 토큰은 잘못된 태스크에서 예산의 90%를 소모합니다. Qwen 3.5/3.6 35B를 3노드에서 운용하며 얻은 실전 교훈입니다."
 tags: ["llm", "quantization", "vllm", "inference", "local-llm"]
 showToc: true
