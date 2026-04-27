@@ -8,9 +8,13 @@ TocOpen: false
 draft: false
 ---
 
-I run a 3-node local LLM inference cluster at home. Two NVIDIA DGX Sparks (128GB unified memory each) and one RTX 5090 desktop (32GB VRAM). All three serve Qwen 3.5/3.6 35B MoE models 24/7 over my local network.
+I run a 3-node local LLM inference cluster at home.
+Two NVIDIA DGX Sparks (128GB unified memory each) and one RTX 5090 desktop (32GB VRAM).
+All three serve Qwen 3.5/3.6 35B MoE models 24/7 over my local network.
 
-This isn't a weekend experiment — it's my daily development infrastructure. Every code review, every research query, every benchmark runs against these nodes. Here's what the setup looks like, what it costs, and what I learned that no spec sheet tells you.
+This isn't a weekend experiment — it's my daily development infrastructure.
+Every code review, every research query, every benchmark runs against these nodes.
+Here's what the setup looks like, what it costs, and what I learned that no spec sheet tells you.
 
 ---
 
@@ -27,13 +31,15 @@ All nodes on the same LAN (192.168.0.x), gigabit wired. The ZBook orchestrates e
 
 ### Why Three Nodes Instead of One Big Machine
 
-A single 128GB node can run the model, but **role specialization** makes the cluster stronger than the sum of its parts:
+A single 128GB node can run the model,
+but **role specialization** makes the cluster stronger than the sum of its parts:
 
 - **DGX1 (Qwen 3.5, thinking OFF):** Pure code generation. 65 tok/s, optimized for fast builder output. No thinking overhead.
 - **DGX2 (Qwen 3.6, thinking ON):** Code review and agentic tasks. Catches bugs the builder missed. Thinking enabled for deeper analysis.
 - **5090 (Q4, 204 tok/s):** Interactive queries. Sub-2-second responses for factual questions. Trading quality (Q4 vs FP8) for 3x speed.
 
-When they work together (DGX1 builds, DGX2 reviews), the pair scores **99.6/100 across 24 scenarios** — higher than either node alone.
+When they work together (DGX1 builds, DGX2 reviews),
+the pair scores **99.6/100 across 24 scenarios** — higher than either node alone.
 
 ---
 
@@ -51,7 +57,9 @@ vLLM 0.19.1 (Docker: vllm-node:latest, 18.2GB image)
 └── Speed: 65 tok/s generation, ~2000 tok/s prefill
 ```
 
-Both DGX nodes run as systemd services with automatic restart. GPU clocks locked at 2500 MHz (`dgx-gpu-clocks.service`). DGX2 has a daily vLLM restart timer at 05:00 KST to clear accumulated KV cache fragmentation.
+Both DGX nodes run as systemd services with automatic restart.
+GPU clocks locked at 2500 MHz (`dgx-gpu-clocks.service`).
+DGX2 has a daily vLLM restart timer at 05:00 KST to clear accumulated KV cache fragmentation.
 
 ### Desktop 5090: llama.cpp
 
@@ -64,7 +72,8 @@ llama-server (llama.cpp, sm_120 build)
 └── Port: 8080 (OpenAI-compatible API)
 ```
 
-The 5090's 1,792 GB/s memory bandwidth gives it absurd prefill speed — 6x faster than the DGX. For single-turn queries, it responds in under 2 seconds.
+The 5090's 1,792 GB/s memory bandwidth gives it absurd prefill speed — 6x faster than the DGX.
+For single-turn queries, it responds in under 2 seconds.
 
 ### ZBook: Orchestration
 
@@ -87,9 +96,12 @@ The ZBook doesn't run models — it runs everything else:
                      └── ZBook   .34 (Ubuntu, orchestrator)
 ```
 
-All wired gigabit. Measured inter-node throughput: 674–936 Mbps. API calls between ZBook and any node: <2ms latency.
+All wired gigabit.
+Measured inter-node throughput: 674–936 Mbps.
+API calls between ZBook and any node: <2ms latency.
 
-The DGX Sparks are ARM (aarch64) — this matters for Docker images and compiled dependencies. vLLM's official ARM images work, but custom tooling needs ARM builds.
+The DGX Sparks are ARM (aarch64) — this matters for Docker images and compiled dependencies.
+vLLM's official ARM images work, but custom tooling needs ARM builds.
 
 ---
 
@@ -101,17 +113,29 @@ The DGX Sparks are ARM (aarch64) — this matters for Docker images and compiled
 - Desktop 5090: ~400W under full GPU load. Loud under sustained inference.
 - ZBook: 45–65W. Fanless for most tasks.
 
-Total cluster: ~750W peak, ~400W typical. My electricity bill increased by about $40/month.
+Total cluster: ~750W peak, ~400W typical.
+My electricity bill increased by about $40/month.
 
 ### What Breaks
 
-**vLLM memory leaks.** After 3–5 days of continuous inference, KV cache fragmentation degrades throughput by 10–15%. The daily restart timer on DGX2 solved this. DGX1 is more stable (fewer thinking-heavy requests).
+**vLLM memory leaks.** After 3–5 days of continuous inference,
+KV cache fragmentation degrades throughput by 10–15%.
+The daily restart timer on DGX2 solved this.
+DGX1 is more stable (fewer thinking-heavy requests).
 
-**MTP non-determinism.** Same prompt, same model, different output. vLLM's speculative decoding introduces variance that llama.cpp doesn't have. I run n=3 and take the mean for benchmarks. For production code generation, I only trust single-shot results from the 5090.
+**MTP non-determinism.** Same prompt, same model, different output.
+vLLM's speculative decoding introduces variance that llama.cpp doesn't have.
+I run n=3 and take the mean for benchmarks.
+For production code generation, I only trust single-shot results from the 5090.
 
-**Docker on ARM.** Most community Docker images are x86-only. Building vLLM from source on ARM took 45 minutes. Some Python wheels need compilation. The official NVIDIA DGX images handle this, but anything custom requires patience.
+**Docker on ARM.** Most community Docker images are x86-only.
+Building vLLM from source on ARM took 45 minutes.
+Some Python wheels need compilation.
+The official NVIDIA DGX images handle this, but anything custom requires patience.
 
-**Network interruptions.** A brief power blink at the router kills all SSH sessions. I use systemd services (not tmux/nohup) for everything critical. Models auto-restart on boot.
+**Network interruptions.** A brief power blink at the router kills all SSH sessions.
+I use systemd services (not tmux/nohup) for everything critical.
+Models auto-restart on boot.
 
 ### Model Updates
 
@@ -121,7 +145,8 @@ Switching models on a DGX takes about 30 minutes:
 3. `systemctl restart dgx-vllm`
 4. Run validation suite (5 minutes)
 
-I've switched DGX2 from Qwen 3.5 to 3.6 this way. The old model stays on disk as backup — 932GB is generous.
+I've switched DGX2 from Qwen 3.5 to 3.6 this way.
+The old model stays on disk as backup — 932GB is generous.
 
 ---
 
@@ -139,11 +164,17 @@ With three nodes, I can:
 
 ## Honestly, Is It Worth It?
 
-**If you're evaluating the economics:** Claude Code Max 20 is $200/month. The DGX Sparks cost significantly more upfront. Pure cost-per-token, the cloud wins for years.
+**If you're evaluating the economics:** Claude Code Max 20 is $200/month.
+The DGX Sparks cost significantly more upfront.
+Pure cost-per-token, the cloud wins for years.
 
-**If you're evaluating the capability:** No cloud API gives you this level of control — per-request thinking toggles, model pinning, deterministic inference, cross-model pipelines, zero-latency local access, complete privacy.
+**If you're evaluating the capability:** No cloud API gives you this level of control —
+per-request thinking toggles, model pinning, deterministic inference,
+cross-model pipelines, zero-latency local access, complete privacy.
 
-**If you're evaluating the learning:** Building and operating this taught me more about LLM inference than any paper or benchmark leaderboard. The failure modes (quantization loss, non-determinism, thinking runaways) don't appear in published benchmarks. You only find them by running thousands of real tasks.
+**If you're evaluating the learning:** Building and operating this taught me more about LLM inference than any paper or benchmark leaderboard.
+The failure modes (quantization loss, non-determinism, thinking runaways) don't appear in published benchmarks.
+You only find them by running thousands of real tasks.
 
 The cluster isn't cheaper than the cloud. It's **more capable** in specific ways that matter for my work — and it doesn't degrade when a vendor ships a bad update.
 

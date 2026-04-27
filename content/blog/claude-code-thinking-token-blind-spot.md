@@ -9,11 +9,19 @@ TocOpen: false
 draft: false
 ---
 
-I pay $200/month for Claude Code Max 20. On April 1, my quota hit **100% in 70 minutes** during normal coding. That turned out to be two cache bugs — Anthropic fixed them in v2.1.90–91, and it made a real difference.
+I pay $200/month for Claude Code Max 20.
+On April 1, my quota hit **100% in 70 minutes** during normal coding.
+That turned out to be two cache bugs — Anthropic fixed them in v2.1.90–91,
+and it made a real difference.
 
-But even after the fix, I wanted to understand where the quota actually goes. So I filed issues, dug into community threads, and built a transparent proxy to measure every API call.
+But even after the fix, I wanted to understand where the quota actually goes.
+So I filed issues, dug into community threads,
+and built a transparent proxy to measure every API call.
 
-After the cache bugs were fixed, I pinned **v2.1.91** and kept measuring. Later I pinned **v2.1.109** — the last stable release before Opus 4.7. Over 19 days, I logged **42,363 API calls** across 298 sessions — all on cache-fixed, pinned versions.
+After the cache bugs were fixed, I pinned **v2.1.91** and kept measuring.
+Later I pinned **v2.1.109** — the last stable release before Opus 4.7.
+Over 19 days, I logged **42,363 API calls** across 298 sessions —
+all on cache-fixed, pinned versions.
 
 Here's what my data shows.
 
@@ -30,41 +38,70 @@ The token volume breakdown across 42,363 proxy-captured requests:
 | Input | 33,337,097 | 0.7% |
 | Output | 20,559,648 | **0.4%** |
 
-Cache read is not waste — it's how the API works. Every request re-reads the conversation context from cache, which is more efficient than rebuilding it from scratch. **The question is whether this volume counts against your quota, and at what rate.** More on that below.
+Cache read is not waste — it's how the API works.
+Every request re-reads the conversation context from cache,
+which is more efficient than rebuilding it from scratch.
+**The question is whether this volume counts against your quota, and at what rate.**
+More on that below.
 
-Each 1% of my 5-hour quota window produced **9,000–16,000 tokens** of visible output. A full 100% window means 0.9M–1.6M tokens of actual code across an entire session.
+Each 1% of my 5-hour quota window produced **9,000–16,000 tokens** of visible output.
+A full 100% window means 0.9M–1.6M tokens of actual code across an entire session.
 
 ## My Original Hypothesis Was Wrong
 
-I initially suspected extended thinking tokens were the hidden cost — they don't appear in `output_tokens`, can't be seen in logs, can't be counted through a proxy. It seemed like the obvious explanation for where the quota was going.
+I initially suspected extended thinking tokens were the hidden cost —
+they don't appear in `output_tokens`, can't be seen in logs,
+can't be counted through a proxy.
+It seemed like the obvious explanation for where the quota was going.
 
-I was wrong. An independent researcher proved it (see [Independent Corroboration](#independent-corroboration) below).
+I was wrong.
+An independent researcher proved it (see [Independent Corroboration](#independent-corroboration) below).
 
 ## What My Proxy Found: 11 Bugs Across 5 Layers
 
-Beyond the token breakdown, the proxy and JSONL analysis uncovered **11 confirmed bugs**. Anthropic fixed the two worst — **B1 Sentinel** (cache prefix corruption) and **B2 Resume** (full context replay) — in v2.1.90–91. All numbers below are from data collected *after* those fixes.
+Beyond the token breakdown, the proxy and JSONL analysis uncovered **11 confirmed bugs**.
+Anthropic fixed the two worst — **B1 Sentinel** (cache prefix corruption) and **B2 Resume** (full context replay) — in v2.1.90–91.
+All numbers below are from data collected *after* those fixes.
 
-The remaining 8 are different in nature — context management, tool result handling, local logging — and have survived **20 releases** (v2.1.92–v2.1.112):
+The remaining 8 are different in nature —
+context management, tool result handling, local logging —
+and have survived **20 releases** (v2.1.92–v2.1.112):
 
 ### The ones that hurt most
 
-**B5 — Tool result truncation.** My proxy logged **167,770 truncation events**. Tool results are silently capped at 200K aggregate characters — anything older gets cut to 1–41 chars. You're paying for 1M context, but tool results get a 200K budget. This is controlled by a server-side setting, not client code.
+**B5 — Tool result truncation.** My proxy logged **167,770 truncation events**.
+Tool results are silently capped at 200K aggregate characters —
+anything older gets cut to 1–41 chars.
+You're paying for 1M context, but tool results get a 200K budget.
+This is controlled by a server-side setting, not client code.
 
-**B3 — Fake rate limits.** The *client* generates "Rate limit reached" errors without making an API call. I found 151 synthetic errors across 65 sessions. You're being throttled by your own tool. ([#40584](https://github.com/anthropics/claude-code/issues/40584))
+**B3 — Fake rate limits.** The *client* generates "Rate limit reached" errors without making an API call.
+I found 151 synthetic errors across 65 sessions.
+You're being throttled by your own tool. ([#40584](https://github.com/anthropics/claude-code/issues/40584))
 
-**B4 — Silent context removal.** Old tool results are silently stripped from context. 5,437 removal events measured. The model loses earlier context without warning. ([#42542](https://github.com/anthropics/claude-code/issues/42542))
+**B4 — Silent context removal.** Old tool results are silently stripped from context.
+5,437 removal events measured.
+The model loses earlier context without warning. ([#42542](https://github.com/anthropics/claude-code/issues/42542))
 
-**B10 — Context injection.** Deprecated TaskOutput messages inject up to 87K tokens into context, triggering cascading autocompact. Last verified on v2.1.109.
+**B10 — Context injection.** Deprecated TaskOutput messages inject up to 87K tokens into context,
+triggering cascading autocompact.
+Last verified on v2.1.109.
 
 ### Others documented
 
-B8 (log inflation, 2.37x duplication across 532 files), B8a (JSONL corruption from concurrent tools), B9 (/branch message duplication, 6%→73% context), B11 (zero reasoning tokens — Anthropic acknowledged on HN). Full evidence: [01_BUGS.md](https://github.com/ArkNill/claude-code-hidden-problem-analysis/blob/main/01_BUGS.md)
+B8 (log inflation, 2.37x duplication across 532 files),
+B8a (JSONL corruption from concurrent tools),
+B9 (/branch message duplication, 6%→73% context),
+B11 (zero reasoning tokens — Anthropic acknowledged on HN).
+Full evidence: [01_BUGS.md](https://github.com/ArkNill/claude-code-hidden-problem-analysis/blob/main/01_BUGS.md)
 
 > *Bug status was last verified on v2.1.109–112. Some may have been addressed in newer releases — check the linked issues for current status.*
 
 ## Opus 4.7: What I Measured vs. What Others Found
 
-Opus 4.7 launched April 15. I documented the tokenizer and search regressions; two other researchers independently measured the quota burn from their own accounts:
+Opus 4.7 launched April 15.
+I documented the tokenizer and search regressions;
+two other researchers independently measured the quota burn from their own accounts:
 
 **What I measured:**
 - **Tokenizer +35%**: the same content consumes more tokens on 4.7
@@ -80,9 +117,12 @@ Opus 4.7 launched April 15. I documented the tokenizer and search regressions; t
 
 > *Each row is a different person, different account, different region. The range (2.4x–12.5x sustained) reflects real variance across conditions. The 50x is a cold-start outlier, not typical usage.*
 
-**Update (April 23):** Anthropic restored default effort to `high` for Pro/Max in v2.1.117 and reverted the "≤25 words" system prompt in v2.1.116. The model pin bypass (#49503) and long-context search regression remain open as of April 27.
+**Update (April 23):** Anthropic restored default effort to `high` for Pro/Max in v2.1.117
+and reverted the "≤25 words" system prompt in v2.1.116.
+The model pin bypass (#49503) and long-context search regression remain open as of April 27.
 
-**Recommendation**: Stay on v2.1.109 with `/model claude-opus-4-6` until the model pin bypass and search regression are resolved.
+**Recommendation**: Stay on v2.1.109 with `/model claude-opus-4-6`
+until the model pin bypass and search regression are resolved.
 
 ## Different Plans Behave Differently
 
@@ -93,9 +133,16 @@ My proxy captured data on two tiers (Max 20x and Max 5x, same account holder):
 | Max 20x | **20.77%** | 78.84% |
 | Max 5x | **0.11%** | 83.46% |
 
-The **190x difference** in Haiku calls is largely architectural — Claude Code's built-in **Explore subagent uses Haiku by default** (confirmed by [cnighswonger's subagent transcript analysis](https://github.com/fgrosswig/claude-gateway/issues/1)). Max 20x usage patterns may trigger more subagent calls. This is a structural difference, not necessarily model substitution.
+The **190x difference** in Haiku calls is largely architectural —
+Claude Code's built-in **Explore subagent uses Haiku by default**
+(confirmed by [cnighswonger's subagent transcript analysis](https://github.com/fgrosswig/claude-gateway/issues/1)).
+Max 20x usage patterns may trigger more subagent calls.
+This is a structural difference, not necessarily model substitution.
 
-Separately, fgrosswig observed 14% Haiku model substitution on a Pro-tier account (EU), while cnighswonger saw zero mismatches on Max 5x (US) across 14K+ calls. Whether this is tier-dependent, session-length-dependent, or load-dependent remains an open question with data from only two accounts.
+Separately, fgrosswig observed 14% Haiku model substitution on a Pro-tier account (EU),
+while cnighswonger saw zero mismatches on Max 5x (US) across 14K+ calls.
+Whether this is tier-dependent, session-length-dependent, or load-dependent
+remains an open question with data from only two accounts.
 
 ## Anthropic's Response
 
