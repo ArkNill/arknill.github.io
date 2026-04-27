@@ -5,7 +5,7 @@ description: "Two DGX Sparks (128GB each) and an RTX 5090 desktop — running Qw
 tags: ["llm", "local-llm", "hardware", "dgx", "homelab"]
 showToc: true
 TocOpen: false
-draft: true
+draft: false
 ---
 
 I run a 3-node local LLM inference cluster at home.

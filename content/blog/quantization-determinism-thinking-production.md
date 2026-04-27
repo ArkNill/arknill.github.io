@@ -5,7 +5,7 @@ description: "FP8 is the production floor. Q4 MoE loses 16% on CJK. vLLM is non-
 tags: ["llm", "quantization", "vllm", "inference", "local-llm"]
 showToc: true
 TocOpen: false
-draft: true
+draft: false
 ---
 
 I run Qwen 3.5 and 3.6 (35B MoE, 3B active parameters) in production across three nodes — two DGX Spark (FP8, vLLM) and one RTX 5090 (Q4, llama.cpp).

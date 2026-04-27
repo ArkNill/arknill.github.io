@@ -5,7 +5,7 @@ description: "DGX Spark 2대(128GB)와 RTX 5090 데스크탑 — Qwen 3.5/3.6 35
 tags: ["llm", "local-llm", "hardware", "dgx", "homelab"]
 showToc: true
 TocOpen: false
-draft: true
+draft: false
 ---
 
 집에서 3노드 LLM 추론 클러스터를 운영하고 있습니다.

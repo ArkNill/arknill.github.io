@@ -5,7 +5,7 @@ description: "My 204 tok/s GPU feels slower than a 65 tok/s one for some tasks. 
 tags: ["llm", "benchmarks", "inference", "local-llm"]
 showToc: true
 TocOpen: false
-draft: true
+draft: false
 ---
 
 I run Qwen 3.6 35B on three machines.
