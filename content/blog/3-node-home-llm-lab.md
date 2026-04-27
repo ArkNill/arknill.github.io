@@ -1,11 +1,11 @@
 ---
 title: "I Built a 3-Node Home LLM Lab. Here's What It Actually Takes."
-date: 2026-04-27
+date: 2026-05-02
 description: "Two DGX Sparks (128GB each) and an RTX 5090 desktop — running Qwen 3.5/3.6 35B in production. Hardware choices, real costs, operational lessons, and why three nodes beat one big one."
 tags: ["llm", "local-llm", "hardware", "dgx", "homelab"]
 showToc: true
 TocOpen: false
-draft: false
+draft: true
 ---
 
 I run a 3-node local LLM inference cluster at home.

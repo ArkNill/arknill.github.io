@@ -1,11 +1,11 @@
 ---
 title: "Opus 4.7 포스트모템: CHANGELOG가 말하지 않은 것"
-date: 2026-04-27
+date: 2026-04-28
 description: "Anthropic이 48일간 Claude Code를 저하시킨 제품 계층 버그 3건을 인정했습니다. 포스트모템을 CHANGELOG와 대조하면 구조적 투명성 격차가 드러납니다 — 3건 중 2건은 문서화 자체가 없었습니다. 그리고 포스트모템 범위 밖에서 5건의 이슈가 여전히 진행 중입니다."
 tags: ["claude-code", "ai", "postmortem", "transparency"]
 showToc: true
 TocOpen: false
-draft: false
+draft: true
 ---
 
 ## 배경
