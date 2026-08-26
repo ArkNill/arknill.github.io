@@ -98,7 +98,7 @@ Full evidence: [01_BUGS.md](https://github.com/ArkNill/claude-code-hidden-proble
 
 ## Opus 4.7: What I Measured vs. What Others Found
 
-Opus 4.7 launched April 15.
+Opus 4.7 launched April 16.
 I documented the tokenizer and search regressions;
 two other researchers independently measured the quota burn from their own accounts:
 
