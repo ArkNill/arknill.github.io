@@ -1,7 +1,6 @@
 ---
 title: "I Tracked 42,363 Claude Code API Calls. Here's Where Your Quota Actually Goes."
-date: 2026-04-06
-lastmod: 2026-04-27
+date: 2026-04-28
 description: "19 days of transparent proxy data on Claude Code Max 20 — token breakdown, 11 bugs found, Opus 4.7 impact, and Anthropic's April 23 postmortem. Independent datasets from other researchers confirmed the pattern and corrected my original hypothesis."
 tags: ["claude-code", "ai", "debugging", "open-source"]
 showToc: true

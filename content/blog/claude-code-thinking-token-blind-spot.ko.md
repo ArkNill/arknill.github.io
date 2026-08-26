@@ -1,7 +1,6 @@
 ---
 title: "Claude Code API 42,363건을 전수 추적해봤습니다 — 쿼터는 대체 어디로 가는 걸까요"
-date: 2026-04-06
-lastmod: 2026-04-27
+date: 2026-04-28
 description: "Claude Code Max 20 구독자가 19일간 투명 프록시로 전수 측정한 토큰 소비 구조, 11개 버그, Opus 4.7 영향, 그리고 Anthropic 4월 23일 포스트모템까지. 독립 연구자 4명의 데이터가 원래 가설을 교정했습니다."
 tags: ["claude-code", "ai", "debugging", "open-source"]
 showToc: true
